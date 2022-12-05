@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+{%block title%} 
+Home Page
+{%endblock%}
+{%block content%}
+Welcome , Create your own dialogue
+{%endblock%}
+{%block highhome%}
+<li class="nav-item active">
+{%endblock%}
+
+{%block dropdown%}
+    <p>
+       <font size="4"> <br>
+        <br>
+        Here's how the website works.
+        First be sure to <a href={{url_for('login')}}>login. </a>
+           <br>
+        if you don't have an account please sign up <a href={{url_for('signup')}}>here </a>
+           </font >
+    </p>
+     {%endblock%}
+
