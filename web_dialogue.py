@@ -1,9 +1,10 @@
 # Importing flask module in the project is mandatory
 # An object of Flask class is our WSGI application.
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import Length , EqualTo , DataRequired,ValidationError
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dialogue.db'
@@ -21,9 +22,13 @@ class Item(db.Model):
 
 
 class RegistrationForms(FlaskForm):
-    username = StringField(label='username')
-    password = PasswordField(label='password')
-    password2 = PasswordField(label='repeat password')
+    def validate_username(self, username_to_check):
+        user = Item.query.filter_by(name=username_to_check.data).first()
+        if user:
+            raise ValidationError('Username already exists! Please try a different username')
+    username = StringField(label='username',validators=[Length(min=2,max=30),DataRequired()])
+    password = PasswordField(label='password',validators=[Length(min=2),DataRequired()])
+    password2 = PasswordField(label='repeat password', validators=[EqualTo('password'),DataRequired()])
     submit = SubmitField(label='submit')
 
 
@@ -58,7 +63,9 @@ def signup():
         db.session.add(user_to_create)
         db.session.commit()
         return redirect(url_for('login'))
-
+    if form.errors !={}:
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user :{err_msg}',category='danger')
     return render_template('signup.html', form=form)
 
 
