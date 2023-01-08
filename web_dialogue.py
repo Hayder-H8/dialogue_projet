@@ -57,25 +57,25 @@ class BaseModel(peewee.Model):
     class Meta:
         database = database
 
-
 class Text(BaseModel):
     text = peewee.CharField()
+    voice=peewee.IntegerField()
 
+#Text.alter_table(add_columns=[IntegerField(column_name="voice", default=None)
+database.create_tables([Text])
 
-
-class TEXTForms(FlaskForm):
-    textarea = StringField(label='speak', validators=[Length(min=2, max=300), DataRequired()])
-    submit = SubmitField(label='submit')
-
-
-@app.route('/typeandhear', methods=['GET', 'POST'])
+@app.route('/type_and_hear', methods=['GET', 'POST'])
 def type_and_hear():
-    form = TEXTForms()
-    text_to_create = Text(text=form.textarea.data)
-    database.create_tables([Text])
+    var= "No text entered"
+    var1=0
+    if request.method == 'POST':
+        var = request.form['text_input']
+        var1=request.form['number']
+    text_to_create = Text(text=var, voice=var1)
     text_to_create.save()
+    text_entries = Text.select()
 
-    return render_template('type_and_hear.html', form=form)
+    return render_template('type_and_hear.html', text_entries=text_entries)
 
 
 @app.route('/home')
@@ -96,4 +96,5 @@ def login():
 
 
 if __name__ == '__main__':
+    Text.delete().execute()
     app.run(debug=True)

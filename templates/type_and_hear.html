@@ -2,22 +2,37 @@
     {%block dropdown%}
         <section class="vh-100 bg-image"
         style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
+             <form action="/type_and_hear" method="POST">
+                 <br>
+      <label for="text_input">Enter text:</label>
+                 <br>
+      <input type="text" id="text_input" name="text_input" style="height: 50px ;width: 700px" >
+<label for="number" class="text-primary font-weight-bold" >Select a voice:</label>
+            <select name="number" id="number" style="height: 50px; overflow-y: scroll;">
+            <option value="1">Voice number 1</option>
+            <option value="2">Voice number 2</option>
+            <option value="3">Voice number 3</option>
 
+  </select>
+      <input type="submit" value="Submit">
+             </form>
+            <h2>Submitted Text Entries</h2>
+    <ul>
+      {% for text_entry in text_entries%}
+        <li>{{ text_entry.text }}: {{ text_entry.voice }}</li>
+      {% endfor %}
+    </ul>
+<footer class="page-footer">
+  <button type="button" class="btn btn-success">Play</button>
+    <button type="button" class="btn btn-danger">Stop</button>
+</footer>
     {%endblock%}
     {%block highhome2%}
         <li class="nav-item active">
+
     {%endblock%}
-  <head>
-    <title>Text Input</title>
-  </head>
-    <form method="POST" class="form-register" >
-                    {{form.hidden_tag()}}
-            {{ form.textarea(class="form-control", placeholder="type your text") }}
 
-                    <br>
-                  {{form.submit(class="btn btn-lg btn-block btn-primary")}}
 
-                    <br>
-              </form>
+
 
 
