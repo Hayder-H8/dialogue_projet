@@ -82,7 +82,7 @@ def type_and_hear():
     text_to_create = Text(text=var, voice=var1)
     text_to_create.save()
     text_entries = Text.select()
-    h=VC.select()
+    h=VC.select().execute()
 
     return render_template('type_and_hear.html', text_entries=text_entries,h=h)
 
@@ -96,15 +96,16 @@ def home():
 
 @app.route('/infos', methods=['GET', 'POST'])
 def info():
-    var1 = 0
-
+    var1=-1
     if request.method == 'POST':
         var1 = request.form['voices']
     choice = VC(voices=var1)
 
     choice.save()
     choices = VC.select()
+
     return render_template('infos.html' , choices=choices)
+    VC.delete().execute()
 
 
 @app.route('/login')

@@ -8,10 +8,11 @@ Infos
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp
 <form action="/infos" method="POST">
             <select name="voices" id="voices" style="height: 50px; overflow-y: scroll;">
-                {% for i in range(6)%}
-            <option value="{{i}}">Voice number{{i}} </option>
-
-                {%endfor%}
+                <option value="{{1}}">FRA </option>
+                <option value="{{2}}"> ANG</option>
+                <option value="{{3}}"> GER</option>
+                <option value="{{4}}"> ARB</option>
+                <option value="{{5}}"> ESP</option>
 
 
                  <ul>
@@ -20,7 +21,7 @@ Infos
              </form>
             <h2>Submitted Text Entries</h2>
         {% for choices in choices%}
-        <li style="color: red;"> here is some text : : {{ choices.voices }}</li>
+        <li style="color: red;"> you chose voice : : {{ choices.voices }}</li>
       {% endfor %}
     </ul>
 

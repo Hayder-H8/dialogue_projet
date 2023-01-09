@@ -10,7 +10,7 @@
         <label for="number" class="text-primary font-weight-bold" >Select a voice:</label>
             <select name="number" id="number" style="height: 50px; overflow-y: scroll;">
                 {% for i in h%}
-            <option value="{{i}}">Voice number{{i}} </option>
+            <option value="{{i}}">Voice {{i.voices}} </option>
 
                 {%endfor%}
 
