@@ -1,21 +1,32 @@
 {% extends 'base.html'%}
 {%block title%} 
 Infos
+
 {%endblock%}
 {%block dropdown%}
-     <p><div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Enter number of characters 
-        </button>
-        <div class="dropdown-menu" aria-labelledby="N°">
-          <a class="dropdown-item" href="#">1</a>
-          <a class="dropdown-item" href="#">2</a>
-          <a class="dropdown-item" href="#">3</a>
-          <a class="dropdown-item" href="#">4</a>
-        </div>
-      </div> </p>
-     {%endblock%}
+<br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+<form action="/infos" method="POST">
+            <select name="voices" id="voices" style="height: 50px; overflow-y: scroll;">
+                {% for i in range(6)%}
+            <option value="{{i}}">Voice number{{i}} </option>
+
+                {%endfor%}
+
+
+                 <ul>
+
+   <input type="submit" value="Submit">
+             </form>
+            <h2>Submitted Text Entries</h2>
+        {% for choices in choices%}
+        <li style="color: red;"> here is some text : : {{ choices.voices }}</li>
+      {% endfor %}
+    </ul>
+
+{%endblock%}
 {%block highhome1%}
 <li class="nav-item active">
+
 {%endblock%}
 

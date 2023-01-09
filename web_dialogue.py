@@ -57,25 +57,34 @@ class BaseModel(peewee.Model):
     class Meta:
         database = database
 
+
 class Text(BaseModel):
     text = peewee.CharField()
-    voice=peewee.IntegerField()
+    voice = peewee.IntegerField()
 
-#Text.alter_table(add_columns=[IntegerField(column_name="voice", default=None)
+
+class VC(BaseModel):
+    voices = peewee.IntegerField()
+
+
+# Text.alter_table(add_columns=[IntegerField(column_name="voice", default=None)
 database.create_tables([Text])
+database.create_tables([VC])
+
 
 @app.route('/type_and_hear', methods=['GET', 'POST'])
 def type_and_hear():
-    var= "No text entered"
-    var1=0
+    var = "No text entered"
+    var1 = 0
     if request.method == 'POST':
         var = request.form['text_input']
-        var1=request.form['number']
+        var1 = request.form['number']
     text_to_create = Text(text=var, voice=var1)
     text_to_create.save()
     text_entries = Text.select()
+    h=VC.select()
 
-    return render_template('type_and_hear.html', text_entries=text_entries)
+    return render_template('type_and_hear.html', text_entries=text_entries,h=h)
 
 
 @app.route('/home')
@@ -85,9 +94,17 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/infos')
+@app.route('/infos', methods=['GET', 'POST'])
 def info():
-    return render_template('infos.html')
+    var1 = 0
+
+    if request.method == 'POST':
+        var1 = request.form['voices']
+    choice = VC(voices=var1)
+
+    choice.save()
+    choices = VC.select()
+    return render_template('infos.html' , choices=choices)
 
 
 @app.route('/login')
@@ -97,4 +114,7 @@ def login():
 
 if __name__ == '__main__':
     Text.delete().execute()
+
+    VC.delete().execute()
+
     app.run(debug=True)
