@@ -96,7 +96,7 @@ def home():
 
 @app.route('/infos', methods=['GET', 'POST'])
 def info():
-    var1=-1
+    var1= 0
     if request.method == 'POST':
         var1 = request.form['voices']
     choice = VC(voices=var1)
