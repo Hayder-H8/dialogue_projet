@@ -1,0 +1,14 @@
+This file shows what are the packages this project requires.
+
+Pour le web :
+1. Flask
+2. flask_sqlalchemy (flask-sqlalchemy)
+3. flask_wtf (flask-WTF)
+4. peewee
+
+Pour la synthèse de voix :
+5. google
+6. google-cloud
+7. google-cloud-vision
+8. text-to-speech
+
