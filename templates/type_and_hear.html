@@ -10,21 +10,24 @@
         <label for="number" class="text-primary font-weight-bold" >Select a voice:</label>
             <select name="number" id="number" style="height: 50px; overflow-y: scroll;">
                 {% for i in h%}
-            <option value="{{i}}">Voice {{i.voices}} </option>
+            <option value="{{i.voices}}">Voice {{i.voices}} </option>
 
                 {%endfor%}
 
   </select>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" name="submit" >
              </form>
             <h2>Submitted Text Entries</h2>
     <ul>
       {% for text_entry in text_entries%}
-        <li>{{ text_entry.text }}: {{ text_entry.voice }}</li>
+        <li>{{ text_entry.text }}: [ voice number{{ text_entry.voice }}]</li>
       {% endfor %}
     </ul>
 <footer class="page-footer">
-  <button type="button" class="btn btn-success">Play</button>
+    <form  method = "POST" action="/play" >
+  <button id="play-button" type="button" class="btn btn-success" value="play" name="play">Play</button>
+    </form>
+        <br>
     <button type="button" class="btn btn-danger">Stop</button>
 </footer>
     {%endblock%}
