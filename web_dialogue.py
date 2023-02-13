@@ -72,29 +72,19 @@ database.create_tables([Text])
 database.create_tables([VC])
 
 
-@app.route('/type_and_hear', methods=['GET', 'POST','PUT'])
+@app.route('/type_and_hear', methods=['GET', 'POST'])
 def type_and_hear():
     var = "No text entered"
     var1 = 0
-
     if request.method == 'POST':
-        if request.form.get('play') == 'play':
-            print(5)
-        else:
-            var = request.form['text_input']
-            var1 = request.form['number']
+        var = request.form['text_input']
+        var1 = request.form['number']
     text_to_create = Text(text=var, voice=var1)
     text_to_create.save()
     text_entries = Text.select()
-    h=VC.select().order_by(VC.voices).execute()
-
+    h=VC.select().execute()
 
     return render_template('type_and_hear.html', text_entries=text_entries,h=h)
-@app.route('/play' ,methods=['POST'])
-def play():
-    if request.method == 'POST':
-        print(5)
-    return redirect('/type_and_hear')
 
 
 @app.route('/home')
@@ -106,10 +96,10 @@ def home():
 
 @app.route('/infos', methods=['GET', 'POST'])
 def info():
-    choice=VC(voices=404)
+    var1=-1
     if request.method == 'POST':
-        choice = VC(voices=request.form['voices'])
-
+        var1 = request.form['voices']
+    choice = VC(voices=var1)
 
     choice.save()
     choices = VC.select()
